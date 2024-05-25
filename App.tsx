@@ -12,12 +12,14 @@ import {
   View,
 } from 'react-native';
 import Login from './src/authen/Login';
+import Register from './src/authen/Register';
 
 
 function App(): React.JSX.Element {
   return (
     <View>
-      <Login/>
+      {/* <Login/> */}
+      <Register/>
     </View>
   );
 }

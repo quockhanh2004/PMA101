@@ -1,9 +1,16 @@
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
 const Login = () => {
     return (
         <View>
+            <View style={styles.header}>
+                <TouchableOpacity>
+                    <Image
+                source={require('../../access/images/ic_back.png')}/>
+                </TouchableOpacity>
+                
+            </View>
             <View style={styles.logoContainer}>
                 <Image
                     source={require("../../access/images/logo.png")}
@@ -26,12 +33,39 @@ const Login = () => {
                     <Text style={styles.text2}>Password</Text>
                     <TextInput
                         style={styles.textInput}
+
                     ></TextInput>
                     <Image
-                    source={require('../../access/images/ic_eye.png')}
-                    style={styles.icEye}/>
+                        source={require('../../access/images/ic_eye.png')}
+                        style={styles.icEye} />
                 </View>
-                
+                <Text style={styles.textForgot}>Forgotten Password</Text>
+                <View style={styles.btnLogin}>
+                    <TouchableOpacity
+                        style={styles.btn}>
+                        <Text style={styles.textBtnLogin}>Log in</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.createAccount}>
+                    <Text style={styles.text3}>Don't have account?</Text>
+                    <TouchableOpacity style={styles.textCreateAccount}>
+                        <Text style={styles.text4}>Create account</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.or}>
+                    <View
+                    style={styles.gachNgang}></View>
+                    <Text style={styles.textOr}>OR</Text>
+                    <View
+                    style={styles.gachNgang}></View>
+                </View>
+                <View style={styles.btnGGContainer}>
+                    <TouchableOpacity style={styles.btnGG}>
+                        <Image
+                        source={require('../../access/images/ic_GG.png')}/>
+                        <Text style={styles.textBtnGG}>Sign in with Google</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -40,45 +74,134 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
-    icEye:{
-        position:'absolute',
-        top:35,
-        right:35
+    header:{
+        marginTop:16,
+        marginLeft:20
     },
-    txtPassContainer:{
-        width:'100%',
-        height:72,
+    textBtnGG:{
+        fontSize:15,
+        fontWeight:'500',
+        color:'black',
+        marginLeft:5
+    },
+    btnGGContainer:{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 16
+    },
+    btnGG:{
+        width: 362,
+        height: 52,
+        flexDirection:'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 32,
+        backgroundColor: '#CECECE',
+    },
+    textOr:{
+        fontSize:15,
+        fontWeight:'500',
+        color:'#AEADAD',
+        marginHorizontal:10
+    },
+    gachNgang:{
+        width:108,
+        height:1,
+        backgroundColor:'#858484'
+    },
+    or:{
+        flexDirection:'row',
+        justifyContent:'center',
         marginTop:16,
         alignItems:'center'
     },
-    text2:{
-        width:362,
-        height:18,
-        fontSize:12,
+    textCreateAccount:{
+        marginLeft:5
+    },
+    text4:{
+        fontSize:15,
         fontWeight:'400',
-        color:'#0B090A',
+        color:'#2BAE70',
+        lineHeight:22.5 
+    },
+    text3:{
+        fontSize:15,
+        fontWeight:'400',
+        color:'#5C5B5C',
+        lineHeight:22.5
+    },
+    createAccount: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 16
+    },
+    textBtnLogin: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: 'white'
+    },
+    btnLogin: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 16
+    },
+    btn: {
+        width: 362,
+        height: 52,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 32,
+        backgroundColor: '#2BAE70',
+    },
+    textForgot: {
+        height: 23,
+        textAlign: 'right',
+        marginRight: 20,
+        fontSize: 15,
+        fontWeight: '400',
+        color: '#5C5B5C',
+        marginTop: 16
+    },
+    icEye: {
+        position: 'absolute',
+        top: 35,
+        right: 35
+    },
+    txtPassContainer: {
+        width: '100%',
+        height: 72,
+        marginTop: 16,
+        alignItems: 'center'
+    },
+    text2: {
+        width: 362,
+        height: 18,
+        fontSize: 12,
+        fontWeight: '400',
+        color: '#0B090A',
         // marginBottom:5
     },
-    textInput:{
-        width:362,
-        height:45,
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:'#000',
-        padding:14,
-        fontSize:16,
-        color:'#000'
-    },  
-    txtEmailContainer:{
-        width:'100%',
-        height:72,
-        marginTop:31,
-        alignItems:'center'
+    textInput: {
+        width: 362,
+        height: 45,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#000',
+        padding: 14,
+        fontSize: 16,
+        color: '#000'
+    },
+    txtEmailContainer: {
+        width: '100%',
+        height: 72,
+        marginTop: 31,
+        alignItems: 'center'
     },
     wellcomeContainer: {
         width: 225,
         height: 50,
-        marginTop: 25.5,
+        marginTop: 20,
         marginLeft: 23,
         flexDirection: 'row',
         alignItems: 'center',
