@@ -1,24 +1,56 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 
-const Register = () => {
+const Register = (props) => {
+    const { navigation } = props
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+    const [phone, setPhone] = useState("")
+    const [textError, setTextError] = useState("")
+    const changeTextEmail = (data) => {
+        setEmail(data);
+        setTextError("")
+    }
+    const changeTextPass = (data) => {
+        setPassword(data);
+        setTextError("")
+    }
+    const changeTextName = (data) => {
+        setName(data);
+        setTextError("")
+    }
+    const changeTextPhone = (data) => {
+        setPhone(data);
+        setTextError("")
+    }
+    const nhanRegister = () => {
+        if (email == "" || password == "" || phone == "" || name == "") {
+            setTextError("Bạn cần nhập đầy đủ thông tin");
+            return;
+        } else {
+            navigation.navigate('Login')
+        }
+
+    }
     return (
         <View>
             <View style={styles.header}>
                 <Text style={styles.title}>Create an acount</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.goBack()}
                     style={styles.icBack}>
                     <Image
-                        source={require('../../access/images/ic_back.png')} />
+                        source={require('../../assets/images/ic_back.png')} />
                 </TouchableOpacity>
             </View>
             <View style={styles.personContainer}>
                 <TouchableOpacity>
                     <Image
-                        source={require('../../access/images/icPerson.png')}
+                        source={require('../../assets/images/icPerson.png')}
                         style={styles.imgPerson} />
                     <Image
-                        source={require('../../access/images/camera.png')}
+                        source={require('../../assets/images/camera.png')}
                         style={styles.imgCamera} />
                 </TouchableOpacity>
             </View>
@@ -27,41 +59,48 @@ const Register = () => {
                 <View style={styles.txtContainer}>
                     <Text style={styles.lable}>Full name</Text>
                     <TextInput
+                        onChangeText={(data) => changeTextName(data)}
                         style={styles.textInput}
                     ></TextInput>
                 </View>
                 <View style={styles.txtContainer}>
                     <Text style={styles.lable}>Email address</Text>
                     <TextInput
+                        onChangeText={(data) => changeTextEmail(data)}
                         style={styles.textInput}
                     ></TextInput>
                 </View>
                 <View style={styles.txtContainer}>
                     <Text style={styles.lable}>Phone</Text>
                     <TextInput
+                        onChangeText={(data) => changeTextPhone(data)}
                         style={styles.textInput}
                     ></TextInput>
                 </View>
                 <View style={styles.txtPassContainer}>
                     <Text style={styles.lable}>Password</Text>
                     <TextInput
+                        onChangeText={(data) => changeTextPass(data)}
                         style={styles.textInput}
 
                     ></TextInput>
                     <Image
-                        source={require('../../access/images/ic_eye.png')}
+                        source={require('../../assets/images/ic_eye.png')}
                         style={styles.icEye} />
                 </View>
+                {!!textError && <Text style={styles.textError}>{textError}</Text>}
                 <View style={styles.btnSignup}>
                     <TouchableOpacity
+                        onPress={nhanRegister}
                         style={styles.btn}>
                         <Text style={styles.textBtn}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
+                
                 <View style={styles.tickAgree}>
                     <TouchableOpacity>
                         <Image
-                            source={require('../../access/images/ic_tick.jpg')} />
+                            source={require('../../assets/images/ic_tick.jpg')} />
                     </TouchableOpacity>
                     <Text style={styles.text2}>I certify that I am 18 years of age or older, and
                         i agree the <Text style={styles.text3}>User Agreement</Text> and Privacy Police</Text>
@@ -76,23 +115,27 @@ const Register = () => {
 export default Register
 
 const styles = StyleSheet.create({
-    text3:{
-        fontSize:13,
-        fontWeight:'400',
-        color:'#2BAE70'
+    textError: {
+        color: 'red',
+        textAlign:'center'
+      },
+    text3: {
+        fontSize: 13,
+        fontWeight: '400',
+        color: '#2BAE70'
     },
-    text2:{
+    text2: {
         width: 300,
-        fontSize:13,
-        fontWeight:'400',
-        color:'#858484',
-        marginLeft:10
+        fontSize: 13,
+        fontWeight: '400',
+        color: '#858484',
+        marginLeft: 10
     },
-    tickAgree:{
-        flexDirection:'row',
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:20
+    tickAgree: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 20
     },
     textBtn: {
         fontSize: 24,

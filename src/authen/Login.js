@@ -1,54 +1,82 @@
 import { Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React,{useContext, useState} from 'react'
+import { AppContext } from '../AppContext';
 
-const Login = () => {
+const Login = (props) => {
+    const {navigation} = props
+    const { setIsLogin } = useContext(AppContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("")
+    const [textError, setTextError] = useState("")
+    const changeTextEmail = (data) => {
+        setEmail(data);
+        setTextError("")
+      }
+      const changeTextPass = (data) => {
+        setPassword(data);
+        setTextError("")
+      }
+    const nhanLogin =() =>{   
+        if (email=="" || password =="") {
+            setTextError("Bạn cần nhập đầy đủ thông tin");
+            return;
+        } else {
+            setIsLogin(true)
+        }  
+        
+    }
     return (
         <View>
             <View style={styles.header}>
                 <TouchableOpacity>
                     <Image
-                source={require('../../access/images/ic_back.png')}/>
+                source={require('../../assets/images/ic_back.png')}/>
                 </TouchableOpacity>
                 
             </View>
             <View style={styles.logoContainer}>
                 <Image
-                    source={require("../../access/images/logo.png")}
+                    source={require("../../assets/images/ic_logo.png")}
                     style={styles.img} />
-                <Text style={styles.logoText}>Car Rental</Text>
             </View>
             <View style={styles.wellcomeContainer}>
                 <Text style={styles.text1}>Wellcome Back</Text>
                 <Image
-                    source={require('../../access/images/ic_wellcome.png')} />
+                    source={require('../../assets/images/ic_wellcome.png')} />
             </View>
             <View>
                 <View style={styles.txtEmailContainer}>
                     <Text style={styles.text2}>Email Address</Text>
                     <TextInput
+                        onChangeText={(data) => changeTextEmail(data)}
                         style={styles.textInput}
                     ></TextInput>
                 </View>
                 <View style={styles.txtPassContainer}>
                     <Text style={styles.text2}>Password</Text>
                     <TextInput
+                    onChangeText={(data) => changeTextPass(data)}
                         style={styles.textInput}
 
                     ></TextInput>
                     <Image
-                        source={require('../../access/images/ic_eye.png')}
+                        source={require('../../assets/images/ic_eye.png')}
                         style={styles.icEye} />
                 </View>
+                {!!textError && <Text style={styles.textError}>{textError}</Text>}
                 <Text style={styles.textForgot}>Forgotten Password</Text>
                 <View style={styles.btnLogin}>
                     <TouchableOpacity
+                    onPress={nhanLogin}
                         style={styles.btn}>
                         <Text style={styles.textBtnLogin}>Log in</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.createAccount}>
                     <Text style={styles.text3}>Don't have account?</Text>
-                    <TouchableOpacity style={styles.textCreateAccount}>
+                    <TouchableOpacity 
+                    onPress={() => navigation.navigate('Register')}
+                    style={styles.textCreateAccount}>
                         <Text style={styles.text4}>Create account</Text>
                     </TouchableOpacity>
                 </View>
@@ -62,7 +90,7 @@ const Login = () => {
                 <View style={styles.btnGGContainer}>
                     <TouchableOpacity style={styles.btnGG}>
                         <Image
-                        source={require('../../access/images/ic_GG.png')}/>
+                        source={require('../../assets/images/ic_GG.png')}/>
                         <Text style={styles.textBtnGG}>Sign in with Google</Text>
                     </TouchableOpacity>
                 </View>
@@ -74,6 +102,10 @@ const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
+    textError: {
+        color: 'red',
+        textAlign:'center'
+      },
     header:{
         marginTop:16,
         marginLeft:20

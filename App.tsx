@@ -13,14 +13,26 @@ import {
 } from 'react-native';
 import Login from './src/authen/Login';
 import Register from './src/authen/Register';
+import { AppProvider } from './src/AppContext';
+import AppNavigation from './src/AppNavigation';
+import Products from './src/main/stacks/Products';
+import Detail from './src/main/stacks/Detail';
+import Payment from './src/main/stacks/Payment';
+import PaymentSuccess from './src/main/stacks/PaymentSuccess';
+
+
+
+
 
 
 function App(): React.JSX.Element {
   return (
-    <View>
-      {/* <Login/> */}
-      <Register/>
-    </View>
+    <AppProvider>
+      <AppNavigation/>
+    </AppProvider>
+    // <View>
+    //   <PaymentSuccess/>
+    // </View>
   );
 }
 
