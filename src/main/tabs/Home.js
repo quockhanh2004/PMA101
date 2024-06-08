@@ -1,28 +1,31 @@
-import { Image, StyleSheet, Text, TextInput, View, TouchableOpacity, FlatList, ScrollView } from 'react-native'
-import React, { useState } from 'react'
-const Home = ({ navigation }) => {
-
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+} from 'react-native';
+import React, {useState} from 'react';
+const Home = ({navigation}) => {
   const [numColumns, setNumColumns] = useState(2);
 
   const category = [
-    { id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png') },
-    { id: 2, name: 'Pick-up', img: require('../../../assets/images/xe.png') },
-    { id: 3, name: 'Van', img: require('../../../assets/images/xe.png') },
-    { id: 4, name: 'SUVs', img: require('../../../assets/images/xe.png') }
-  ]
+    {id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png')},
+    {id: 2, name: 'Pick-up', img: require('../../../assets/images/xe.png')},
+    {id: 3, name: 'Van', img: require('../../../assets/images/xe.png')},
+    {id: 4, name: 'SUVs', img: require('../../../assets/images/xe.png')},
+  ];
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View style={styles.itemcontainer}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Products')}>
-        {!!item.img && <Image
-          style={styles.img}
-          source={item.img} />}
+      <TouchableOpacity onPress={() => navigation.navigate('Products')}>
+        {!!item.img && <Image style={styles.img} source={item.img} />}
       </TouchableOpacity>
-
-
     </View>
-  )
+  );
 
   return (
     <View>
@@ -30,32 +33,31 @@ const Home = ({ navigation }) => {
         <Text style={styles.title}>CarRental</Text>
         <View style={styles.headerContainer}>
           <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => navigation.openDrawer()}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Image
                 style={styles.icMenu}
-                source={require('../../../assets/images/ic_menu.jpg')} />
+                source={require('../../../assets/images/ic_menu.jpg')}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image
                 style={styles.icThongBao}
-                source={require('../../../assets/images/ic_thongbao.png')} />
+                source={require('../../../assets/images/ic_thongbao.png')}
+              />
             </TouchableOpacity>
-
           </View>
         </View>
         <View style={styles.textInputContainer}>
-          <TextInput style={styles.textInput}
-            placeholder='Search vehicle' />
+          <TextInput style={styles.textInput} placeholder="Search vehicle" />
           <TouchableOpacity style={styles.icbtnSearch}>
             <Image
               style={styles.icSearch}
-              source={require('../../../assets/images/ic_search.png')} />
+              source={require('../../../assets/images/ic_search.png')}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.carsContainer}>
-          <View style={styles.cars}>
-          </View>
+          <View style={styles.cars}></View>
         </View>
         <View style={styles.seeCarContainer}>
           <View style={styles.seeCar}>
@@ -71,51 +73,47 @@ const Home = ({ navigation }) => {
           <FlatList
             data={category}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={item => item.id.toString()}
             numColumns={2}
             key={2}
             scrollEnabled={false}
           />
         </View>
-
-
-
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 const styles = StyleSheet.create({
   listItem: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    marginBottom: 20
+    marginBottom: 20,
   },
   img: {
     width: 173,
-    height: 150
+    height: 150,
   },
   itemcontainer: {
     width: 173,
     height: 150,
     alignItems: 'center',
     margin: 5,
-
   },
   txtSeeall: {
     fontSize: 13,
     fontWeight: '500',
     lineHeight: 19.5,
-    color: '#343233'
+    color: '#343233',
   },
   lable: {
     fontSize: 15,
     fontWeight: '500',
     lineHeight: 22.5,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
   btnVehiclesAvaliable: {
     width: 155,
@@ -123,32 +121,32 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#238B59',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   seeCar: {
     width: 350,
     height: 39,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   seeCarContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 17
+    marginTop: 17,
   },
   carsContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 18
+    marginTop: 18,
   },
   cars: {
     width: 350,
     height: 175,
     backgroundColor: '#00000057',
-    borderRadius: 8
+    borderRadius: 8,
   },
   icbtnSearch: {
     width: 49,
@@ -158,17 +156,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 30,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icSearch: {
     width: 24,
-    height: 24
+    height: 24,
   },
   textInputContainer: {
     with: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 18
+    marginTop: 18,
   },
   textInput: {
     width: 350,
@@ -178,34 +176,34 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     padding: 14,
     fontSize: 16,
-    color: '#000'
+    color: '#000',
   },
   headerContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16
+    marginTop: 16,
   },
   icThongBao: {
     width: 24,
-    height: 24
+    height: 24,
   },
   icMenu: {
     width: 24,
-    height: 24
+    height: 24,
   },
   header: {
     width: 350,
     height: 35,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontSize: 16,
     fontWeight: '800',
     color: '#2BAE70',
     marginTop: 15,
-    marginStart: 33
-  }
-})
+    marginStart: 33,
+  },
+});
