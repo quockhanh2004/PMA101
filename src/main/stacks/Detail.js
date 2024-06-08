@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity, Image} from 'react-native-ui-lib';
 import React from 'react';
 
 const Detail = props => {

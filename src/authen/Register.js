@@ -1,12 +1,8 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+/* eslint-disable react/self-closing-comp */
+import {StyleSheet, TextInput, Image, ToastAndroid} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
 import React, {useState} from 'react';
+import AxiosInstance from '../api/AxiosInstance';
 
 const Register = props => {
   const {navigation} = props;
@@ -15,6 +11,12 @@ const Register = props => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [textError, setTextError] = useState('');
+  const [tickAgree, settickAgree] = useState(false);
+
+  const changeTickAgree = () => {
+    settickAgree(!tickAgree);
+  };
+
   const changeTextEmail = data => {
     setEmail(data);
     setTextError('');
@@ -31,16 +33,32 @@ const Register = props => {
     setPhone(data);
     setTextError('');
   };
-  const nhanRegister = () => {
-    if (email == '' || password == '' || phone == '' || name == '') {
+  const nhanRegister = async () => {
+    if (email === '' || password === '' || phone === '' || name === '') {
       setTextError('Bạn cần nhập đầy đủ thông tin');
       return;
-    } else {
-      navigation.navigate('Login');
+    }
+    // } else if (password.length() < 8) {
+    //   setTextError('Mật khẩu phải tối thiểu 8 ký tự');
+    // } 
+    else {
+      const data = await AxiosInstance().post('/users/register', {
+        email: email.trim(),
+        phone: phone.trim(),
+        password: password.trim(),
+        name: name.trim(),
+      });
+      if (data.email != null) {
+        ToastAndroid.show('Đăng ký thành công', ToastAndroid.SHORT);
+        navigation.navigate('Login');
+      } else {
+        setTextError(data.error);
+      }
     }
   };
+
   return (
-    <View>
+    <View bg-white height={'100%'}>
       <View style={styles.header}>
         <Text style={styles.title}>Create an acount</Text>
         <TouchableOpacity
@@ -99,8 +117,12 @@ const Register = props => {
         </View>
 
         <View style={styles.tickAgree}>
-          <TouchableOpacity>
-            <Image source={require('../../assets/images/ic_tick.jpg')} />
+          <TouchableOpacity onPress={changeTickAgree}>
+            {!tickAgree ? (
+              <Image source={require('../../assets/images/ic_tick.jpg')} />
+            ) : (
+              <Image source={require('../../assets/images/ic_check.png')} />
+            )}
           </TouchableOpacity>
           <Text style={styles.text2}>
             I certify that I am 18 years of age or older, and i agree the{' '}
@@ -173,7 +195,7 @@ const styles = StyleSheet.create({
     color: '#0B090A',
   },
   textInput: {
-    width: 362,
+    width: '100%',
     height: 45,
     borderRadius: 10,
     borderWidth: 1,

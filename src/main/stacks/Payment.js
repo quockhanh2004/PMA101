@@ -1,4 +1,5 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
 import React from 'react';
 
 const Payment = props => {

@@ -1,14 +1,18 @@
+/* eslint-disable react/self-closing-comp */
 import {
   Button,
   Image,
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
+// import {} from 'react-native-ui-lib';
 import React, {useContext, useState} from 'react';
 import {AppContext} from '../AppContext';
+import AxiosInstance from '../api/AxiosInstance';
 
 const Login = props => {
   const {navigation} = props;
@@ -24,16 +28,28 @@ const Login = props => {
     setPassword(data);
     setTextError('');
   };
-  const nhanLogin = () => {
-    if (email == '' || password == '') {
+  const nhanLogin = async () => {
+    if (email === '' || password === '') {
       setTextError('Bạn cần nhập đầy đủ thông tin');
       return;
     } else {
-      setIsLogin(true);
+      const data = await AxiosInstance().post('/users/login', {
+        email,
+        password,
+      });
+      if (data.email != null) {
+        setIsLogin(true);
+        ToastAndroid.show('Đăng nhập thành công', ToastAndroid.SHORT);
+      } else {
+        setTextError(data.error);
+        return;
+      }
+
+      // setIsLogin(true);
     }
   };
   return (
-    <View>
+    <View style={{backgroundColor: 'white', height: '100%'}}>
       <View style={styles.header}>
         <TouchableOpacity>
           <Image source={require('../../assets/images/ic_back.png')} />
@@ -66,7 +82,7 @@ const Login = props => {
             style={styles.icEye}
           />
         </View>
-        {!!textError && <Text style={styles.textError}>{textError}</Text>}
+        {textError && <Text style={styles.textError}>{textError}</Text>}
         <Text style={styles.textForgot}>Forgotten Password</Text>
         <View style={styles.btnLogin}>
           <TouchableOpacity onPress={nhanLogin} style={styles.btn}>

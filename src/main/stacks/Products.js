@@ -1,17 +1,11 @@
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, Image, StyleSheet, ScrollView, TextInput } from 'react-native';
+
+import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
+
 import React from 'react';
 
 const Products = props => {
-  const {navigation} = props;
+  const { navigation } = props;
 
   const products = [
     {
@@ -44,7 +38,7 @@ const Products = props => {
     },
   ];
 
-  const renderItem = ({item}) => (
+  const renderItem = ({ item }) => (
     <View style={styles.item}>
       <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
         <View style={styles.txtContainer}>
@@ -162,7 +156,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     justifyContent: 'center',
     shadowColor: '#2BAE70',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,

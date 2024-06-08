@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Image,
   StyleSheet,
@@ -8,21 +9,28 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import AxiosInstance from '../../api/AxiosInstance';
 const Home = ({navigation}) => {
   const [numColumns, setNumColumns] = useState(2);
 
-  const category = [
-    {id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png')},
-    {id: 2, name: 'Pick-up', img: require('../../../assets/images/xe.png')},
-    {id: 3, name: 'Van', img: require('../../../assets/images/xe.png')},
-    {id: 4, name: 'SUVs', img: require('../../../assets/images/xe.png')},
-  ];
+  // const category = [
+  //   {id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png')},
+  //   {id: 2, name: 'Pick-up', img: require('../../../assets/images/xe.png')},
+  //   {id: 3, name: 'Van', img: require('../../../assets/images/xe.png')},
+  //   {id: 4, name: 'SUVs', img: require('../../../assets/images/xe.png')},
+  // ];
+  const [category, setcategory] = useState([]);
+
+  useEffect(async () => {
+    const cate = await AxiosInstance().get('category/get');
+    setcategory(cate);
+  }, []);
 
   const renderItem = ({item}) => (
     <View style={styles.itemcontainer}>
       <TouchableOpacity onPress={() => navigation.navigate('Products')}>
-        {!!item.img && <Image style={styles.img} source={item.img} />}
+        {!!item.img && <Image style={styles.img} source={{uri: item.img}} />}
       </TouchableOpacity>
     </View>
   );
@@ -57,7 +65,11 @@ const Home = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <View style={styles.carsContainer}>
-          <View style={styles.cars}></View>
+          <View style={styles.cars}>
+            <Image
+              source={require('../../../assets/images/bg_home_card.png')}
+            />
+          </View>
         </View>
         <View style={styles.seeCarContainer}>
           <View style={styles.seeCar}>
@@ -73,7 +85,7 @@ const Home = ({navigation}) => {
           <FlatList
             data={category}
             renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item._id.toString()}
             numColumns={2}
             key={2}
             scrollEnabled={false}
