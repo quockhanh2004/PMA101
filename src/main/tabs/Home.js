@@ -22,9 +22,17 @@ const Home = ({navigation}) => {
   // ];
   const [category, setcategory] = useState([]);
 
-  useEffect(async () => {
-    const cate = await AxiosInstance().get('category/get');
+  useEffect( () => {
+    async function fetchCate() {
+      try {
+        const cate = await AxiosInstance().get('category/get');
     setcategory(cate);
+      } catch (error) {
+        console.log("Lỗi lấy dữ liệu Category", error);
+      }
+    }
+    fetchCate()
+    
   }, []);
 
   const renderItem = ({item}) => (

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const AxiosInstance = (contentType = 'application/json') => {
   const axiosInstance = axios.create({
-    baseURL: 'http://quockhanh020924.id.vn:8006',
+    baseURL: 'http://quockhanh020924.id.vn:8006/',
   });
 
   axiosInstance.interceptors.request.use(

@@ -29,7 +29,7 @@ const Login = props => {
     setTextError('');
   };
   const nhanLogin = async () => {
-    if (email === '' || password === '') {
+    if (email == '' || password == '') {
       setTextError('Bạn cần nhập đầy đủ thông tin');
       return;
     } else {
@@ -37,6 +37,7 @@ const Login = props => {
         email,
         password,
       });
+      console.log(data.email);
       if (data.email != null) {
         setIsLogin(true);
         ToastAndroid.show('Đăng nhập thành công', ToastAndroid.SHORT);
@@ -44,8 +45,6 @@ const Login = props => {
         setTextError(data.error);
         return;
       }
-
-      // setIsLogin(true);
     }
   };
   return (
