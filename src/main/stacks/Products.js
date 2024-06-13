@@ -2,10 +2,46 @@ import { FlatList, Image, StyleSheet, ScrollView, TextInput } from 'react-native
 
 import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
 
-import React from 'react';
+import React,{useContext, useEffect, useState} from 'react';
+import AxiosInstance from '../../api/AxiosInstance';
 
-const Products = props => {
+const Products = (props) => {
   const { navigation } = props;
+  const _id = props?.route?.params?._id;
+  const [product, setProduct] = useState([])
+  const [textSearch, setTextSearch] = useState("")
+  const changeTextSearch = data => {
+    setTextSearch(data)
+  };
+  useEffect(()=>{
+    const getProducts = async () => {
+      try {
+        if (!_id) {
+          return;
+        }
+        const dataProduct = await AxiosInstance()
+          .get(`/product/mucProduct/${_id}`);
+          setProduct(dataProduct)
+      } catch (error) {
+        console.log("loi product ",error);
+      }
+    }
+    getProducts();
+  },[_id])
+
+  useEffect(()=>{
+    const searchProduct = async () =>{
+      const data = await AxiosInstance().post('/product/search',{
+          carName: textSearch.trim()
+      });
+      if (data != null) {
+        setProduct(data)
+      }else{
+        console.log("loi search ========");
+      }
+    }
+    searchProduct()
+  },[textSearch])
 
   const products = [
     {
@@ -42,16 +78,18 @@ const Products = props => {
     <View style={styles.item}>
       <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
         <View style={styles.txtContainer}>
-          <Text style={styles.txtName}>{item.name}</Text>
-          <Text style={styles.txtHangXe}>{item.hangXe}</Text>
+          <Text style={styles.txtName}>{item.carName}</Text>
+          <Text 
+          numberOfLines={1}
+          style={styles.txtHangXe}>{item.title}</Text>
           <Text style={styles.txtStrating}>Strating price</Text>
           <Text style={styles.txtPrice}>
-            ${item.price}
+            ${item.rentalPrice}
             <Text style={styles.txtDay}>/Day</Text>
           </Text>
         </View>
 
-        {!!item.img && <Image style={styles.img} source={item.img} />}
+        {item.img && <Image style={styles.img} source={{uri: item.img}} />}
       </TouchableOpacity>
     </View>
   );
@@ -70,7 +108,10 @@ const Products = props => {
           </TouchableOpacity>
         </View>
         <View style={styles.textInputContainer}>
-          <TextInput style={styles.textInput} placeholder="Search vehicle" />
+          <TextInput 
+          style={styles.textInput} 
+          placeholder="Search vehicle"
+          onChangeText={data => changeTextSearch(data)}/>
           <TouchableOpacity style={styles.icbtnSearch}>
             <Image
               style={styles.icSearch}
@@ -88,9 +129,9 @@ const Products = props => {
         </View>
         <View style={styles.listItem}>
           <FlatList
-            data={products}
+            data={product}
             renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={item => item._id.toString()}
             scrollEnabled={false}
           />
         </View>

@@ -9,10 +9,13 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import AxiosInstance from '../../api/AxiosInstance';
+import {AppContext} from '../../AppContext';
 const Home = ({navigation}) => {
   const [numColumns, setNumColumns] = useState(2);
+  const {user} = useContext(AppContext)
+  // console.log("userrrrrrrr",user);
 
   // const category = [
   //   {id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png')},
@@ -34,10 +37,11 @@ const Home = ({navigation}) => {
     fetchCate()
     
   }, []);
+  console.log(category);
 
   const renderItem = ({item}) => (
     <View style={styles.itemcontainer}>
-      <TouchableOpacity onPress={() => navigation.navigate('Products')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Products',{_id:item._id})}>
         {!!item.img && <Image style={styles.img} source={{uri: item.img}} />}
       </TouchableOpacity>
     </View>

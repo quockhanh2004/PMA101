@@ -12,6 +12,7 @@ const Register = props => {
   const [phone, setPhone] = useState('');
   const [textError, setTextError] = useState('');
   const [tickAgree, settickAgree] = useState(false);
+  const [showPassword, setShowPassword] = useState(true)
 
   const changeTickAgree = () => {
     settickAgree(!tickAgree);
@@ -106,11 +107,15 @@ const Register = props => {
             <Text style={styles.lable}>Password</Text>
             <TextInput
               onChangeText={data => changeTextPass(data)}
-              style={styles.textInput}></TextInput>
-            <Image
-              source={require('../../assets/images/ic_eye.png')}
-              style={styles.icEye}
-            />
+              style={styles.textInput}
+              secureTextEntry={showPassword}></TextInput>
+              <TouchableOpacity
+              onPress={()=>setShowPassword(!showPassword)}
+               style={styles.icEye}>
+                <Image
+              source={require('../../assets/images/ic_eye.png')}/>
+              </TouchableOpacity>
+            
           </View>
           {!!textError && <Text style={styles.textError}>{textError}</Text>}
           <View style={styles.btnSignup}>

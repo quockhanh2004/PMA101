@@ -10,16 +10,18 @@ import {
   View,
 } from 'react-native';
 // import {} from 'react-native-ui-lib';
-import React, {useContext, useState} from 'react';
-import {AppContext} from '../AppContext';
+import React, { useContext, useState } from 'react';
+import { AppContext } from '../AppContext';
 import AxiosInstance from '../api/AxiosInstance';
 
 const Login = props => {
-  const {navigation} = props;
-  const {setIsLogin} = useContext(AppContext);
+  const { navigation } = props;
+  const { setIsLogin } = useContext(AppContext);
   const [email, setEmail] = useState('');
+  const { setUser } = useContext(AppContext);
   const [password, setPassword] = useState('');
   const [textError, setTextError] = useState('');
+  const [showPassword, setShowPassword] = useState(true)
   const changeTextEmail = data => {
     setEmail(data);
     setTextError('');
@@ -37,8 +39,9 @@ const Login = props => {
         email,
         password,
       });
-      console.log(data.email);
+      console.log(data);
       if (data.email != null) {
+        setUser(data)
         setIsLogin(true);
         ToastAndroid.show('Đăng nhập thành công', ToastAndroid.SHORT);
       } else {
@@ -48,7 +51,7 @@ const Login = props => {
     }
   };
   return (
-    <View style={{backgroundColor: 'white', height: '100%'}}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <View style={styles.header}>
         <TouchableOpacity>
           <Image source={require('../../assets/images/ic_back.png')} />
@@ -75,11 +78,17 @@ const Login = props => {
           <Text style={styles.text2}>Password</Text>
           <TextInput
             onChangeText={data => changeTextPass(data)}
-            style={styles.textInput}></TextInput>
-          <Image
-            source={require('../../assets/images/ic_eye.png')}
-            style={styles.icEye}
-          />
+            style={styles.textInput}
+            secureTextEntry={showPassword}></TextInput>
+          <TouchableOpacity
+          style={styles.icEye}
+          onPress={()=>setShowPassword(!showPassword)}>
+            <Image
+              source={require('../../assets/images/ic_eye.png')}
+              
+            />
+          </TouchableOpacity>
+
         </View>
         {textError && <Text style={styles.textError}>{textError}</Text>}
         <Text style={styles.textForgot}>Forgotten Password</Text>

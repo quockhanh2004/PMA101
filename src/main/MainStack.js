@@ -87,6 +87,7 @@ const MainTabNavigation = () => {
 
 const CustomDrawer = props => {
   const { setIsLogin } = useContext(AppContext);
+  const {user} = useContext(AppContext);
   const nhanLogin = () => {
     setIsLogin(false);
   };
@@ -114,7 +115,7 @@ const CustomDrawer = props => {
             source={require('../../assets/images/icPerson.png')}
           />
           <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#FFF' }}>
-            Bảo Hoàng
+            {user.name}
           </Text>
         </View>
         <DrawerItemList {...props} />
