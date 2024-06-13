@@ -1,18 +1,22 @@
 /* eslint-disable react/self-closing-comp */
-import {StyleSheet, TextInput, Image, ToastAndroid} from 'react-native';
-import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
-import React, {useState} from 'react';
+import { StyleSheet, TextInput, Image, ToastAndroid } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
+import React, { useState, useContext } from 'react';
 import AxiosInstance from '../../api/AxiosInstance';
+import { AppContext } from '../../AppContext';
 
 const Register = props => {
-  const {navigation} = props;
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const { user } = useContext(AppContext)
+  const { navigation } = props;
+  const [name, setName] = useState(user.name);
+  const [newPass, setNewPass] = useState('');
   const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(user.phone);
   const [textError, setTextError] = useState('');
-  const changeTextEmail = data => {
-    setEmail(data);
+  
+  const { setIsLogin } = useContext(AppContext)
+  const changeTextNewPass = data => {
+    setNewPass(data)
     setTextError('');
   };
   const changeTextPass = data => {
@@ -28,21 +32,19 @@ const Register = props => {
     setTextError('');
   };
   const nhanRegister = async () => {
-    if (email == '' || password == '' || phone == '' || name == '') {
+    if (password == '' || phone == '' || name == '') {
       setTextError('Bạn cần nhập đầy đủ thông tin');
-      return;
     } else {
-      const data = await AxiosInstance().post('/users/register', {
-        email: email.trim(),
-        phone: phone.trim(),
+      const data = await AxiosInstance().post('/users/changePassword', {
+        email: user.email.trim(),
         password: password.trim(),
-        name: name.trim(),
+        newPassword: newPass.trim(),
       });
-      if (data.email != null) {
-        ToastAndroid.show('Đăng ký thành công', ToastAndroid.SHORT);
-        navigation.navigate('Login');
+      if (data != null) {
+        ToastAndroid.show('Thay đổi thành công', ToastAndroid.SHORT);
+        setIsLogin(false)
       } else {
-        setTextError('Email đã tồn tại');
+        setTextError(data.error);
       }
     }
   };
@@ -74,18 +76,14 @@ const Register = props => {
         <View style={styles.txtContainer}>
           <Text style={styles.lable}>Full name</Text>
           <TextInput
+            value= {name}
             onChangeText={data => changeTextName(data)}
             style={styles.textInput}></TextInput>
         </View>
-        {/* <View style={styles.txtContainer}>
-          <Text style={styles.lable}>Email address</Text>
-          <TextInput
-            onChangeText={data => changeTextEmail(data)}
-            style={styles.textInput}></TextInput>
-        </View> */}
         <View style={styles.txtContainer}>
           <Text style={styles.lable}>Phone</Text>
           <TextInput
+          value={phone}
             onChangeText={data => changeTextPhone(data)}
             style={styles.textInput}></TextInput>
         </View>
@@ -93,6 +91,16 @@ const Register = props => {
           <Text style={styles.lable}>Password</Text>
           <TextInput
             onChangeText={data => changeTextPass(data)}
+            style={styles.textInput}></TextInput>
+          <Image
+            source={require('../../../assets/images/ic_eye.png')}
+            style={styles.icEye}
+          />
+        </View>
+        <View style={styles.txtPassContainer}>
+          <Text style={styles.lable}>New Password</Text>
+          <TextInput
+            onChangeText={data => changeTextNewPass(data)}
             style={styles.textInput}></TextInput>
           <Image
             source={require('../../../assets/images/ic_eye.png')}
