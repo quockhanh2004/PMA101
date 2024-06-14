@@ -36,9 +36,6 @@ const Register = props => {
   };
   const nhanRegister = async () => {
     if (email !== '' || password !== '' || phone !== '' || name !== '') {
-      if (password.length < 8) {
-        setTextError('Password phải từ lớn hơn 8 ký tự');
-      }
       const data = await AxiosInstance().post('/users/register', {
         email: email.trim(),
         phone: phone.trim(),

@@ -91,7 +91,12 @@ const Login = props => {
 
         </View>
         {textError && <Text style={styles.textError}>{textError}</Text>}
-        <Text style={styles.textForgot}>Forgotten Password</Text>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate('ForgotPassword')}>
+          <Text 
+        style={styles.textForgot}>Forgotten Password</Text>
+        </TouchableOpacity>
+        
         <View style={styles.btnLogin}>
           <TouchableOpacity onPress={nhanLogin} style={styles.btn}>
             <Text style={styles.textBtnLogin}>Log in</Text>
