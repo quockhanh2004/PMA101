@@ -6,6 +6,7 @@ export const AppProvider = props => {
   const {children} = props;
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState([])
+  const [detailProduct, setDetailProduct] = useState({})
 
   return (
     <AppContext.Provider
@@ -13,7 +14,9 @@ export const AppProvider = props => {
         isLogin,
         setIsLogin,
         user,
-        setUser
+        setUser,
+        detailProduct,
+        setDetailProduct
       }}>
       {props.children}
     </AppContext.Provider>

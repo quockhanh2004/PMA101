@@ -1,9 +1,35 @@
-import {Image, StyleSheet} from 'react-native';
-import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
-import React from 'react';
+import { Image, StyleSheet, ToastAndroid } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
+import React, { useContext, useEffect } from 'react';
+import { AppContext } from '../../AppContext';
+import AxiosInstance from '../../api/AxiosInstance';
 
 const Payment = props => {
-  const {navigation} = props;
+  const { navigation } = props;
+  const { detailProduct, setDetailProduct } = useContext(AppContext)
+  const _id = props?.route?.params?._id;
+  const { user } = useContext(AppContext)
+  console.log(detailProduct);
+
+  const nhanThanhToan = async () => {
+    const data = await AxiosInstance().post('/booking/add', {
+      userId: user._id,
+      carName: detailProduct.carName,
+      rentalPrice: detailProduct.rentalPrice,
+      img: detailProduct.img,
+      title: detailProduct.title,
+      saleOffL: 0
+    })
+    console.log(data);
+    if (data != null) {
+      ToastAndroid.show("Thanh toán thành công", ToastAndroid.SHORT)
+      navigation.navigate('PaymentSuccess')
+    } else {
+      console.log("loi thanh toan");
+    }
+  }
+
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -49,11 +75,11 @@ const Payment = props => {
           <View style={styles.price}>
             <Text style={styles.titlePrice}>Price</Text>
             <Text style={styles.txtPrice}>
-              <Text style={{color: '#2BAE70'}}>$</Text> 140.0
+              <Text style={{ color: '#2BAE70' }}>$</Text> 140.0
             </Text>
           </View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('PaymentSuccess')}
+            onPress={nhanThanhToan}
             style={styles.btnThanhToan}>
             <Text>Pay from Credit Card</Text>
           </TouchableOpacity>

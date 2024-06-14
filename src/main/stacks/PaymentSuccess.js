@@ -2,7 +2,8 @@ import {Image, StyleSheet} from 'react-native';
 import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
 import React from 'react';
 
-const PaymentSuccess = () => {
+const PaymentSuccess = props => {
+  const {navigation} = props
   return (
     <View>
       <View style={styles.header}>
@@ -22,7 +23,9 @@ const PaymentSuccess = () => {
       <Text style={styles.title}>Payment Successful</Text>
       <Text style={styles.txtPaymentId}>Payment Id: 1522-22235</Text>
       <View style={styles.btnCantactContainer}>
-        <TouchableOpacity style={styles.btnContact}>
+        <TouchableOpacity
+        onPress={()=>navigation.navigate('Home')}
+         style={styles.btnContact}>
           <Text style={styles.textBtn}>Cantact Driver</Text>
         </TouchableOpacity>
       </View>

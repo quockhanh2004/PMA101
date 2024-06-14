@@ -1,13 +1,31 @@
-import {StyleSheet} from 'react-native';
-import {Text, View, TouchableOpacity, Image} from 'react-native-ui-lib';
-import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native-ui-lib';
+import React, { useEffect, useContext, useState } from 'react';
+import AxiosInstance from '../../api/AxiosInstance';
+import { AppContext } from '../../AppContext';
 
 const Detail = props => {
-  const {navigation} = props;
+  const { navigation } = props;
+  const { detailProduct, setDetailProduct } = useContext(AppContext)
+  const [product, setProduct] = useState({})
+  const _id = props?.route?.params?._id;
+  useEffect(() => {
+    const getProductById = async () => {
+      const data = await AxiosInstance().get(`/product/fromId/${_id}`)
+      if (data) {
+        setDetailProduct(data)
+      } else {
+        console.log("loi getProductById");
+      }
+    }
+    getProductById()
+  }, [_id])
+
+  // console.log(detailProduct);
   return (
     <View>
       <View style={styles.header}>
-        <Text style={styles.title}>RAV 4</Text>
+        <Text style={styles.title}>{detailProduct.title}</Text>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
           style={styles.icBack}>
@@ -17,17 +35,18 @@ const Detail = props => {
       <View style={styles.itemContainer}>
         <View style={styles.item}>
           <View style={styles.txtContainer}>
-            <Text style={styles.txtName}>Xe 1</Text>
-            <Text style={styles.txtHangXe}>Toyota</Text>
+            <Text style={styles.txtName}>{detailProduct.carName}</Text>
+            <Text style={styles.txtHangXe}>{detailProduct.title}</Text>
             <Text style={styles.txtStrating}>Strating price</Text>
             <Text style={styles.txtPrice}>
-              $200<Text style={styles.txtDay}>/Day</Text>
+              {detailProduct.rentalPrice}<Text style={styles.txtDay}>/Day</Text>
             </Text>
           </View>
-          <Image
+          {detailProduct.img && <Image
             style={styles.img}
-            source={require('../../../assets/images/product.png')}
-          />
+            source={{ uri: detailProduct.img }}
+          />}
+
         </View>
       </View>
       <View style={styles.infoContainer}>
@@ -134,7 +153,7 @@ const Detail = props => {
       </View>
       <View style={styles.btnBooking}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Payment')}
+          onPress={() => navigation.navigate('Payment', { _id: _id })}
           style={styles.btn}>
           <Text style={styles.textBtn}>BOOK</Text>
         </TouchableOpacity>
@@ -225,7 +244,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#FFFFFF',
     shadowColor: '#2BAE70',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -275,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     shadowColor: '#2BAE70',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
@@ -338,7 +357,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     shadowColor: '#2BAE70',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,

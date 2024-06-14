@@ -28,6 +28,7 @@ const Products = (props) => {
     }
     getProducts();
   },[_id])
+  // console.log(product);
 
   useEffect(()=>{
     const searchProduct = async () =>{
@@ -76,7 +77,7 @@ const Products = (props) => {
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
-      <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Detail',{_id: item._id})}>
         <View style={styles.txtContainer}>
           <Text style={styles.txtName}>{item.carName}</Text>
           <Text 

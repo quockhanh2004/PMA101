@@ -16,13 +16,6 @@ const Home = ({navigation}) => {
   const [numColumns, setNumColumns] = useState(2);
   const {user} = useContext(AppContext)
   // console.log("userrrrrrrr",user);
-
-  // const category = [
-  //   {id: 1, name: 'Sedan', img: require('../../../assets/images/xe.png')},
-  //   {id: 2, name: 'Pick-up', img: require('../../../assets/images/xe.png')},
-  //   {id: 3, name: 'Van', img: require('../../../assets/images/xe.png')},
-  //   {id: 4, name: 'SUVs', img: require('../../../assets/images/xe.png')},
-  // ];
   const [category, setcategory] = useState([]);
 
   useEffect( () => {
@@ -35,9 +28,7 @@ const Home = ({navigation}) => {
       }
     }
     fetchCate()
-    
   }, []);
-  console.log(category);
 
   const renderItem = ({item}) => (
     <View style={styles.itemcontainer}>
