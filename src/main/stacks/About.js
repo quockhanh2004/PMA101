@@ -1,22 +1,29 @@
 /* eslint-disable react/self-closing-comp */
-import { StyleSheet, TextInput, Image, ToastAndroid } from 'react-native';
-import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
-import React, { useState, useContext } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  Image,
+  ToastAndroid,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
+import React, {useState, useContext} from 'react';
 import AxiosInstance from '../../api/AxiosInstance';
-import { AppContext } from '../../AppContext';
+import {AppContext} from '../../AppContext';
 
 const Register = props => {
-  const { user } = useContext(AppContext)
-  const { navigation } = props;
+  const {user} = useContext(AppContext);
+  const {navigation} = props;
   const [name, setName] = useState(user.name);
   const [newPass, setNewPass] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState(user.phone);
   const [textError, setTextError] = useState('');
-  
-  const { setIsLogin } = useContext(AppContext)
+
+  const {setIsLogin} = useContext(AppContext);
   const changeTextNewPass = data => {
-    setNewPass(data)
+    setNewPass(data);
     setTextError('');
   };
   const changeTextPass = data => {
@@ -42,7 +49,7 @@ const Register = props => {
       });
       if (data != null) {
         ToastAndroid.show('Thay đổi thành công', ToastAndroid.SHORT);
-        setIsLogin(false)
+        setIsLogin(false);
       } else {
         setTextError(data.error);
       }
@@ -50,71 +57,73 @@ const Register = props => {
   };
 
   return (
-    <View bg-white height={'100%'}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Update info</Text>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.icBack}>
-          <Image source={require('../../../assets/images/ic_back.png')} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.personContainer}>
-        <TouchableOpacity>
-          <Image
-            source={require('../../../assets/images/icPerson.png')}
-            style={styles.imgPerson}
-          />
-          <Image
-            source={require('../../../assets/images/camera.png')}
-            style={styles.imgCamera}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.text1}>Complete this process to get started</Text>
-      <View>
-        <View style={styles.txtContainer}>
-          <Text style={styles.lable}>Full name</Text>
-          <TextInput
-            value= {name}
-            onChangeText={data => changeTextName(data)}
-            style={styles.textInput}></TextInput>
-        </View>
-        <View style={styles.txtContainer}>
-          <Text style={styles.lable}>Phone</Text>
-          <TextInput
-          value={phone}
-            onChangeText={data => changeTextPhone(data)}
-            style={styles.textInput}></TextInput>
-        </View>
-        <View style={styles.txtPassContainer}>
-          <Text style={styles.lable}>Password</Text>
-          <TextInput
-            onChangeText={data => changeTextPass(data)}
-            style={styles.textInput}></TextInput>
-          <Image
-            source={require('../../../assets/images/ic_eye.png')}
-            style={styles.icEye}
-          />
-        </View>
-        <View style={styles.txtPassContainer}>
-          <Text style={styles.lable}>New Password</Text>
-          <TextInput
-            onChangeText={data => changeTextNewPass(data)}
-            style={styles.textInput}></TextInput>
-          <Image
-            source={require('../../../assets/images/ic_eye.png')}
-            style={styles.icEye}
-          />
-        </View>
-        {!!textError && <Text style={styles.textError}>{textError}</Text>}
-        <View style={styles.btnSignup}>
-          <TouchableOpacity onPress={nhanRegister} style={styles.btn}>
-            <Text style={styles.textBtn}>Update</Text>
-          </TouchableOpacity>
-        </View>
+    <KeyboardAvoidingView>
+      <ScrollView>
+        <View bg-white height={'100%'}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Update info</Text>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.icBack}>
+              <Image source={require('../../../assets/images/ic_back.png')} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.personContainer}>
+            <TouchableOpacity>
+              <Image
+                source={require('../../../assets/images/icPerson.png')}
+                style={styles.imgPerson}
+              />
+              <Image
+                source={require('../../../assets/images/camera.png')}
+                style={styles.imgCamera}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.text1}>Complete this process to get started</Text>
+          <View>
+            <View style={styles.txtContainer}>
+              <Text style={styles.lable}>Full name</Text>
+              <TextInput
+                value={name}
+                onChangeText={data => changeTextName(data)}
+                style={styles.textInput}></TextInput>
+            </View>
+            <View style={styles.txtContainer}>
+              <Text style={styles.lable}>Phone</Text>
+              <TextInput
+                value={phone}
+                onChangeText={data => changeTextPhone(data)}
+                style={styles.textInput}></TextInput>
+            </View>
+            <View style={styles.txtPassContainer}>
+              <Text style={styles.lable}>Password</Text>
+              <TextInput
+                onChangeText={data => changeTextPass(data)}
+                style={styles.textInput}></TextInput>
+              <Image
+                source={require('../../../assets/images/ic_eye.png')}
+                style={styles.icEye}
+              />
+            </View>
+            <View style={styles.txtPassContainer}>
+              <Text style={styles.lable}>New Password</Text>
+              <TextInput
+                onChangeText={data => changeTextNewPass(data)}
+                style={styles.textInput}></TextInput>
+              <Image
+                source={require('../../../assets/images/ic_eye.png')}
+                style={styles.icEye}
+              />
+            </View>
+            {!!textError && <Text style={styles.textError}>{textError}</Text>}
+            <View style={styles.btnSignup}>
+              <TouchableOpacity onPress={nhanRegister} style={styles.btn}>
+                <Text style={styles.textBtn}>Update</Text>
+              </TouchableOpacity>
+            </View>
 
-        {/* <View style={styles.tickAgree}>
+            {/* <View style={styles.tickAgree}>
           <TouchableOpacity>
             <Image source={require('../../../assets/images/ic_tick.jpg')} />
           </TouchableOpacity>
@@ -123,8 +132,10 @@ const Register = props => {
             <Text style={styles.text3}>User Agreement</Text> and Privacy Police
           </Text>
         </View> */}
-      </View>
-    </View>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

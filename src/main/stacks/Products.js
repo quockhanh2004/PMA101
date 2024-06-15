@@ -1,47 +1,48 @@
-import { FlatList, Image, StyleSheet, ScrollView, TextInput } from 'react-native';
+import {FlatList, Image, StyleSheet, ScrollView, TextInput} from 'react-native';
 
-import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
+import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
 
-import React,{useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AxiosInstance from '../../api/AxiosInstance';
 
-const Products = (props) => {
-  const { navigation } = props;
+const Products = props => {
+  const {navigation} = props;
   const _id = props?.route?.params?._id;
-  const [product, setProduct] = useState([])
-  const [textSearch, setTextSearch] = useState("")
+  const [product, setProduct] = useState([]);
+  const [textSearch, setTextSearch] = useState('');
   const changeTextSearch = data => {
-    setTextSearch(data)
+    setTextSearch(data);
   };
-  useEffect(()=>{
+  useEffect(() => {
     const getProducts = async () => {
       try {
         if (!_id) {
           return;
         }
-        const dataProduct = await AxiosInstance()
-          .get(`/product/mucProduct/${_id}`);
-          setProduct(dataProduct)
+        const dataProduct = await AxiosInstance().get(
+          `/product/mucProduct/${_id}`,
+        );
+        setProduct(dataProduct);
       } catch (error) {
-        console.log("loi product ",error);
+        console.log('loi product ', error);
       }
-    }
+    };
     getProducts();
-  },[_id])
+  }, [_id]);
 
-  useEffect(()=>{
-    const searchProduct = async () =>{
-      const data = await AxiosInstance().post('/product/search',{
-          carName: textSearch.trim()
+  useEffect(() => {
+    const searchProduct = async () => {
+      const data = await AxiosInstance().post('/product/search', {
+        carName: textSearch.trim(),
       });
       if (data != null) {
-        setProduct(data)
-      }else{
-        console.log("loi search ========");
+        setProduct(data);
+      } else {
+        console.log('loi search ========');
       }
-    }
-    searchProduct()
-  },[textSearch])
+    };
+    searchProduct();
+  }, [textSearch]);
 
   const products = [
     {
@@ -74,14 +75,14 @@ const Products = (props) => {
     },
   ];
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({item}) => (
     <View style={styles.item}>
       <TouchableOpacity onPress={() => navigation.navigate('Detail')}>
         <View style={styles.txtContainer}>
           <Text style={styles.txtName}>{item.carName}</Text>
-          <Text 
-          numberOfLines={1}
-          style={styles.txtHangXe}>{item.title}</Text>
+          <Text numberOfLines={1} style={styles.txtHangXe}>
+            {item.title}
+          </Text>
           <Text style={styles.txtStrating}>Strating price</Text>
           <Text style={styles.txtPrice}>
             ${item.rentalPrice}
@@ -108,10 +109,11 @@ const Products = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.textInputContainer}>
-          <TextInput 
-          style={styles.textInput} 
-          placeholder="Search vehicle"
-          onChangeText={data => changeTextSearch(data)}/>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Search vehicle"
+            onChangeText={data => changeTextSearch(data)}
+          />
           <TouchableOpacity style={styles.icbtnSearch}>
             <Image
               style={styles.icSearch}
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     justifyContent: 'center',
     shadowColor: '#2BAE70',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,

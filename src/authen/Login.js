@@ -8,20 +8,22 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 // import {} from 'react-native-ui-lib';
-import React, { useContext, useState } from 'react';
-import { AppContext } from '../AppContext';
+import React, {useContext, useState} from 'react';
+import {AppContext} from '../AppContext';
 import AxiosInstance from '../api/AxiosInstance';
 
 const Login = props => {
-  const { navigation } = props;
-  const { setIsLogin } = useContext(AppContext);
+  const {navigation} = props;
+  const {setIsLogin} = useContext(AppContext);
   const [email, setEmail] = useState('');
-  const { setUser } = useContext(AppContext);
+  const {setUser} = useContext(AppContext);
   const [password, setPassword] = useState('');
   const [textError, setTextError] = useState('');
-  const [showPassword, setShowPassword] = useState(true)
+  const [showPassword, setShowPassword] = useState(true);
   const changeTextEmail = data => {
     setEmail(data);
     setTextError('');
@@ -41,7 +43,7 @@ const Login = props => {
       });
       console.log(data);
       if (data.email != null) {
-        setUser(data)
+        setUser(data);
         setIsLogin(true);
         ToastAndroid.show('Đăng nhập thành công', ToastAndroid.SHORT);
       } else {
@@ -51,73 +53,73 @@ const Login = props => {
     }
   };
   return (
-    <View style={{ backgroundColor: 'white', height: '100%' }}>
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Image source={require('../../assets/images/ic_back.png')} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../../assets/images/ic_logo.png')}
-          style={styles.img}
-        />
-      </View>
-      <View style={styles.wellcomeContainer}>
-        <Text style={styles.text1}>Wellcome Back</Text>
-        <Image source={require('../../assets/images/ic_wellcome.png')} />
-      </View>
-      <View>
-        <View style={styles.txtEmailContainer}>
-          <Text style={styles.text2}>Email Address</Text>
-          <TextInput
-            onChangeText={data => changeTextEmail(data)}
-            style={styles.textInput}></TextInput>
-        </View>
-        <View style={styles.txtPassContainer}>
-          <Text style={styles.text2}>Password</Text>
-          <TextInput
-            onChangeText={data => changeTextPass(data)}
-            style={styles.textInput}
-            secureTextEntry={showPassword}></TextInput>
-          <TouchableOpacity
-          style={styles.icEye}
-          onPress={()=>setShowPassword(!showPassword)}>
+    <KeyboardAvoidingView>
+      <ScrollView>
+        <View style={{backgroundColor: 'white', height: '100%'}}>
+          <View style={styles.header}>
+            <TouchableOpacity>
+              <Image source={require('../../assets/images/ic_back.png')} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.logoContainer}>
             <Image
-              source={require('../../assets/images/ic_eye.png')}
-              
+              source={require('../../assets/images/ic_logo.png')}
+              style={styles.img}
             />
-          </TouchableOpacity>
-
+          </View>
+          <View style={styles.wellcomeContainer}>
+            <Text style={styles.text1}>Wellcome Back</Text>
+            <Image source={require('../../assets/images/ic_wellcome.png')} />
+          </View>
+          <View>
+            <View style={styles.txtEmailContainer}>
+              <Text style={styles.text2}>Email Address</Text>
+              <TextInput
+                onChangeText={data => changeTextEmail(data)}
+                style={styles.textInput}></TextInput>
+            </View>
+            <View style={styles.txtPassContainer}>
+              <Text style={styles.text2}>Password</Text>
+              <TextInput
+                onChangeText={data => changeTextPass(data)}
+                style={styles.textInput}
+                secureTextEntry={showPassword}></TextInput>
+              <TouchableOpacity
+                style={styles.icEye}
+                onPress={() => setShowPassword(!showPassword)}>
+                <Image source={require('../../assets/images/ic_eye.png')} />
+              </TouchableOpacity>
+            </View>
+            {textError && <Text style={styles.textError}>{textError}</Text>}
+            <Text style={styles.textForgot}>Forgotten Password</Text>
+            <View style={styles.btnLogin}>
+              <TouchableOpacity onPress={nhanLogin} style={styles.btn}>
+                <Text style={styles.textBtnLogin}>Log in</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.createAccount}>
+              <Text style={styles.text3}>Don't have account?</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Register')}
+                style={styles.textCreateAccount}>
+                <Text style={styles.text4}>Create account</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.or}>
+              <View style={styles.gachNgang}></View>
+              <Text style={styles.textOr}>OR</Text>
+              <View style={styles.gachNgang}></View>
+            </View>
+            <View style={styles.btnGGContainer}>
+              <TouchableOpacity style={styles.btnGG}>
+                <Image source={require('../../assets/images/ic_GG.png')} />
+                <Text style={styles.textBtnGG}>Sign in with Google</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-        {textError && <Text style={styles.textError}>{textError}</Text>}
-        <Text style={styles.textForgot}>Forgotten Password</Text>
-        <View style={styles.btnLogin}>
-          <TouchableOpacity onPress={nhanLogin} style={styles.btn}>
-            <Text style={styles.textBtnLogin}>Log in</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.createAccount}>
-          <Text style={styles.text3}>Don't have account?</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}
-            style={styles.textCreateAccount}>
-            <Text style={styles.text4}>Create account</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.or}>
-          <View style={styles.gachNgang}></View>
-          <Text style={styles.textOr}>OR</Text>
-          <View style={styles.gachNgang}></View>
-        </View>
-        <View style={styles.btnGGContainer}>
-          <TouchableOpacity style={styles.btnGG}>
-            <Image source={require('../../assets/images/ic_GG.png')} />
-            <Text style={styles.textBtnGG}>Sign in with Google</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

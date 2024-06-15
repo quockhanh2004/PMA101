@@ -1,18 +1,25 @@
 /* eslint-disable react/self-closing-comp */
-import { StyleSheet, TextInput, Image, ToastAndroid, ScrollView } from 'react-native';
-import { Text, TouchableOpacity, View } from 'react-native-ui-lib';
-import React, { useState } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  Image,
+  ToastAndroid,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native-ui-lib';
+import React, {useState} from 'react';
 import AxiosInstance from '../api/AxiosInstance';
 
 const Register = props => {
-  const { navigation } = props;
+  const {navigation} = props;
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [textError, setTextError] = useState('');
   const [tickAgree, settickAgree] = useState(false);
-  const [showPassword, setShowPassword] = useState(true)
+  const [showPassword, setShowPassword] = useState(true);
 
   const changeTickAgree = () => {
     settickAgree(!tickAgree);
@@ -51,99 +58,103 @@ const Register = props => {
       } else {
         setTextError(data.error);
       }
-
-    }
-    else {
+    } else {
       setTextError('Bạn cần nhập đầy đủ thông tin');
       return;
     }
-
   };
 
   return (
-    <View bg-white height={'100%'}>
+    <KeyboardAvoidingView>
       <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.title}>Create an acount</Text>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.icBack}>
-            <Image source={require('../../assets/images/ic_back.png')} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.personContainer}>
-          <TouchableOpacity>
-            <Image
-              source={require('../../assets/images/icPerson.png')}
-              style={styles.imgPerson}
-            />
-            <Image
-              source={require('../../assets/images/camera.png')}
-              style={styles.imgCamera}
-            />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.text1}>Complete this process to get started</Text>
-        <View>
-          <View style={styles.txtContainer}>
-            <Text style={styles.lable}>Full name</Text>
-            <TextInput
-              onChangeText={data => changeTextName(data)}
-              style={styles.textInput}></TextInput>
-          </View>
-          <View style={styles.txtContainer}>
-            <Text style={styles.lable}>Email address</Text>
-            <TextInput
-              onChangeText={data => changeTextEmail(data)}
-              style={styles.textInput}></TextInput>
-          </View>
-          <View style={styles.txtContainer}>
-            <Text style={styles.lable}>Phone</Text>
-            <TextInput
-              onChangeText={data => changeTextPhone(data)}
-              style={styles.textInput}></TextInput>
-          </View>
-          <View style={styles.txtPassContainer}>
-            <Text style={styles.lable}>Password</Text>
-            <TextInput
-              onChangeText={data => changeTextPass(data)}
-              style={styles.textInput}
-              secureTextEntry={showPassword}></TextInput>
+        <View bg-white height={'100%'}>
+          <ScrollView>
+            <View style={styles.header}>
+              <Text style={styles.title}>Create an acount</Text>
               <TouchableOpacity
-              onPress={()=>setShowPassword(!showPassword)}
-               style={styles.icEye}>
-                <Image
-              source={require('../../assets/images/ic_eye.png')}/>
+                onPress={() => navigation.goBack()}
+                style={styles.icBack}>
+                <Image source={require('../../assets/images/ic_back.png')} />
               </TouchableOpacity>
-            
-          </View>
-          {!!textError && <Text style={styles.textError}>{textError}</Text>}
-          <View style={styles.btnSignup}>
-            <TouchableOpacity onPress={nhanRegister} style={styles.btn}>
-              <Text style={styles.textBtn}>Sign up</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.tickAgree}>
-            <TouchableOpacity onPress={changeTickAgree}>
-              {!tickAgree ? (
+            </View>
+            <View style={styles.personContainer}>
+              <TouchableOpacity>
                 <Image
-                  style={styles.checkBox}
-                  source={require('../../assets/images/ic_tick.jpg')} />
-              ) : (
+                  source={require('../../assets/images/icPerson.png')}
+                  style={styles.imgPerson}
+                />
                 <Image
-                  style={styles.checkBox}
-                  source={require('../../assets/images/ic_check.png')} />
-              )}
-            </TouchableOpacity>
-            <Text style={styles.text2}>
-              I certify that I am 18 years of age or older, and i agree the{' '}
-              <Text style={styles.text3}>User Agreement</Text> and Privacy Police
+                  source={require('../../assets/images/camera.png')}
+                  style={styles.imgCamera}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.text1}>
+              Complete this process to get started
             </Text>
-          </View>
+            <View>
+              <View style={styles.txtContainer}>
+                <Text style={styles.lable}>Full name</Text>
+                <TextInput
+                  onChangeText={data => changeTextName(data)}
+                  style={styles.textInput}></TextInput>
+              </View>
+              <View style={styles.txtContainer}>
+                <Text style={styles.lable}>Email address</Text>
+                <TextInput
+                  onChangeText={data => changeTextEmail(data)}
+                  style={styles.textInput}></TextInput>
+              </View>
+              <View style={styles.txtContainer}>
+                <Text style={styles.lable}>Phone</Text>
+                <TextInput
+                  onChangeText={data => changeTextPhone(data)}
+                  style={styles.textInput}></TextInput>
+              </View>
+              <View style={styles.txtPassContainer}>
+                <Text style={styles.lable}>Password</Text>
+                <TextInput
+                  onChangeText={data => changeTextPass(data)}
+                  style={styles.textInput}
+                  secureTextEntry={showPassword}></TextInput>
+                <TouchableOpacity
+                  onPress={() => setShowPassword(!showPassword)}
+                  style={styles.icEye}>
+                  <Image source={require('../../assets/images/ic_eye.png')} />
+                </TouchableOpacity>
+              </View>
+              {!!textError && <Text style={styles.textError}>{textError}</Text>}
+              <View style={styles.btnSignup}>
+                <TouchableOpacity onPress={nhanRegister} style={styles.btn}>
+                  <Text style={styles.textBtn}>Sign up</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.tickAgree}>
+                <TouchableOpacity onPress={changeTickAgree}>
+                  {!tickAgree ? (
+                    <Image
+                      style={styles.checkBox}
+                      source={require('../../assets/images/ic_tick.jpg')}
+                    />
+                  ) : (
+                    <Image
+                      style={styles.checkBox}
+                      source={require('../../assets/images/ic_check.png')}
+                    />
+                  )}
+                </TouchableOpacity>
+                <Text style={styles.text2}>
+                  I certify that I am 18 years of age or older, and i agree the{' '}
+                  <Text style={styles.text3}>User Agreement</Text> and Privacy
+                  Police
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -152,7 +163,7 @@ export default Register;
 const styles = StyleSheet.create({
   checkBox: {
     width: 24,
-    height: 24
+    height: 24,
   },
   textError: {
     color: 'red',
